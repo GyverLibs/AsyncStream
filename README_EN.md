@@ -1,3 +1,5 @@
+This is an automatic translation, may be incorrect in some places. See sources and examples!
+
 # AsyncStream
 Library for asynchronous reading of Stream objects (Serial, etc.)
 - Non-blocking read into own buffer
