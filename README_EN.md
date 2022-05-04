@@ -1,9 +1,16 @@
 This is an automatic translation, may be incorrect in some places. See sources and examples!
 
+#versions)
+[![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
+[![Foo](https://img.shields.io/badge/%E2%82%BD$%E2%82%AC%20%D0%9D%D0%B0%20%D0%BF%D0% B8%D0%B2%D0%BE-%D1%81%20%D1%80%D1%8B%D0%B1%D0%BA%D0%BE%D0%B9-orange.svg?style=flat-square )](https://alexgyver.ru/support_alex/)
+
+[![Foo](https://img.shields.io/badge/README-ENGLISH-brightgreen.svg?style=for-the-badge)](https://github-com.translate.goog/GyverLibs/ AsyncStream?_x_tr_sl=ru&_x_tr_tl=en)
+
 # AsyncStream
 Library for asynchronous reading of Stream objects (Serial, etc.)
 - Non-blocking read into own buffer
-- Specifying a terminator characterCranberry
+- Specifying a terminator character
+
 ### Compatibility
 Compatible with all Arduino platforms (using Arduino functions)
 
@@ -12,7 +19,8 @@ Compatible with all Arduino platforms (using Arduino functions)
 - [Initialization](#init)
 - [Usage](#usage)
 - [Example](#example)
-- [Versions](#versions)- [Bugs and feedback](#feedback)
+- [Versions](#versions)
+- [Bugs and feedback](#feedback)
 
 <a id="install"></a>
 ## Installation
@@ -20,8 +28,9 @@ Compatible with all Arduino platforms (using Arduino functions)
     - Arduino IDE
     - Arduino IDE v2
     - PlatformIO
-- [Download library](https://github.com/GyverLibs/AsyncStream/archive/refs/heads/main.zip) .zip archive for manual installation:
-    - Unzip and put in *C:\Program Files (x86)\Arduino\libraries* (Windows x64)- Extract and put in *C:\Program Files\Arduino\libraries* (Windows x32)
+- [Download Library](https://github.com/GyverLibs/AsyncStream/archive/refs/heads/main.zip) .zip archive for manual installation:
+    - Unzip and put in *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
+    - Unzip and put in *C:\Program Files\Arduino\libraries* (Windows x32)
     - Unpack and put in *Documents/Arduino/libraries/*
     - (Arduino IDE) automatic installation from .zip: *Sketch/Include library/Add .ZIP library…* and specify the downloaded archive
 - Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE% D0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
@@ -30,7 +39,8 @@ Compatible with all Arduino platforms (using Arduino functions)
 ## Initialization
 ```cpp
 // <buffer size>
-// Stream handler (Serial, SoftwareSerial etc)// terminator (terminator) - default ';'
+// Stream handler (Serial, SoftwareSerial etc)
+// terminator (end-of-receive character) - default is ';'
 // timeout in ms - default 50
 AsyncStream<100> serial(&Serial);
 AsyncStream<100> serial(&Serial, '\n');
@@ -39,7 +49,8 @@ AsyncStream<100> serial(&Serial, '\n', 20);
 
 <a id="usage"></a>
 ## Usage
-```cppvoid setTimeout(uint16_t tout); // set timeout
+```cpp
+void setTimeout(uint16_t tout); // set timeout
 void setEOL(charter); // set end character
 bool available(); // data received
 charbuf; // buffer access
@@ -48,7 +59,8 @@ charbuf; // buffer access
 <a id="example"></a>
 ## Example
 See **examples** for other examples!
-```cpp#include <AsyncStream.h>
+```cpp
+#include <AsyncStream.h>
 AsyncStream<100> serial(&Serial, '\n');
 
 void setup() {
@@ -57,7 +69,8 @@ void setup() {
   //serial.setEOL(';'); // set another terminator (EOL)
 }
 
-// test string (send to serial)// 1234,3.14,hello,4567,lolkek,qwerty
+// test string (send to serial)
+// 1234,3.14,hello,4567,lolkek,qwerty
 void loop() {
   if (serial.available()) { // if data is received
     Serial.println(serial.buf); // output them (as char*)
@@ -66,7 +79,8 @@ void loop() {
 ```
 
 <a id="versions"></a>
-## Versions- v1.0
+## Versions
+- v1.0
 
 <a id="feedback"></a>
 ## Bugs and feedback
