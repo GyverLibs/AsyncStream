@@ -12,10 +12,11 @@
 
     Версии:
     v1.0 - релиз
+    v1.1 - исправлен баг
 */
 
-#ifndef AsyncStream_h
-#define AsyncStream_h
+#ifndef _AsyncStream_h
+#define _AsyncStream_h
 #include <Arduino.h>
 
 template < uint16_t SIZE >
