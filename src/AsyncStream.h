@@ -55,6 +55,7 @@ public:
         }
         if (_parseF && millis() - _tmr >= _tout) {
             _parseF = false;
+            buf[_count] = '\0';
             return true;
         }
         return false;
