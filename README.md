@@ -1,6 +1,5 @@
 [![latest](https://img.shields.io/github/v/release/GyverLibs/AsyncStream.svg?color=brightgreen)](https://github.com/GyverLibs/AsyncStream/releases/latest/download/AsyncStream.zip)
 [![PIO](https://badges.registry.platformio.org/packages/gyverlibs/library/AsyncStream.svg)](https://registry.platformio.org/libraries/gyverlibs/AsyncStream)
-[![arduino-library](https://www.ardu-badge.com/badge/AsyncStream.svg?)](https://www.ardu-badge.com/AsyncStream)
 [![PIO](https://badges.registry.platformio.org/packages/gyverlibs/library/AsyncStream.svg)](https://registry.platformio.org/libraries/gyverlibs/AsyncStream)
 [![arduino-library](https://www.ardu-badge.com/badge/AsyncStream.svg?)](https://www.ardu-badge.com/AsyncStream)
 [![Foo](https://img.shields.io/badge/Website-AlexGyver.ru-blue.svg?style=flat-square)](https://alexgyver.ru/)
