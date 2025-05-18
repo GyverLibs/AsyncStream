@@ -1,11 +1,11 @@
 /*
     Библиотека для асинхронного чтения объектов Stream (Serial итд)
-    Документация: 
+    Документация:
     GitHub: https://github.com/GyverLibs/AsyncStream
     Возможности:
     - Неблокирующее чтение в свой буфер
     - Указание символа терминатора
-    
+
     AlexGyver, alex@alexgyver.ru
     https://alexgyver.ru/
     MIT License
@@ -19,34 +19,34 @@
 #define _AsyncStream_h
 #include <Arduino.h>
 
-template < uint16_t SIZE >
+template <uint16_t SIZE>
 class AsyncStream {
-public:
+   public:
     AsyncStream(Stream* port, char ter = ';', uint16_t tout = 50) {
         _port = port;
         _tout = tout;
         _ter = ter;
     }
-    
+
     // установить таймаут
     void setTimeout(uint16_t tout) {
         _tout = tout;
     }
-    
+
     // установить символ конца
     void setEOL(char ter) {
         _ter = ter;
     }
-    
+
     // данные приняты
     bool available() {
-        if (_port -> available()) {
+        if (_port->available()) {
             if (!_parseF) {
                 _parseF = true;
                 _count = 0;
                 _tmr = millis();
             }
-            char ch = _port -> read();
+            char ch = _port->read();
             if (ch == _ter) {
                 buf[_count] = '\0';
                 _parseF = false;
@@ -61,11 +61,16 @@ public:
         }
         return false;
     }
-    
+
+    // количество данных в буфере
+    uint16_t length() {
+        return _count;
+    }
+
     // доступ к буферу
     char buf[SIZE];
 
-private:
+   private:
     Stream* _port;
     char _ter;
     uint16_t _tout, _count = 0;

@@ -41,6 +41,7 @@
 
 
 <a id="init"></a>
+
 ## Инициализация
 ```cpp
 // <размер буфера>
@@ -53,15 +54,19 @@ AsyncStream<100> serial(&Serial, '\n', 20);
 ```
 
 <a id="usage"></a>
+
 ## Использование
 ```cpp
 void setTimeout(uint16_t tout); // установить таймаут
 void setEOL(char ter);          // установить символ конца
 bool available();               // данные приняты
+uint16_t length();              // количество данных в буфере
+
 char buf;                       // доступ к буферу
 ```
 
 <a id="example"></a>
+
 ## Пример
 Остальные примеры смотри в **examples**!
 ```cpp
