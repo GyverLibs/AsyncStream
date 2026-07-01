@@ -48,10 +48,15 @@
 // Stream обработчик (Serial, SoftwareSerial итд)
 // терминатор (символ конца приёма) - по умолчанию ';' (вырезается из буфера!)
 // таймаут в мс - по умолчанию 50
-AsyncStream<100> serial(&Serial);
-AsyncStream<100> serial(&Serial, '\n');
-AsyncStream<100> serial(&Serial, '\n', 20);
+AsyncStream<100> serial(Serial);
+AsyncStream<100> serial(Serial, '\n');
+AsyncStream<100> serial(Serial, '\n', 20);
 ```
+
+Размер буфера должен быть больше нуля и включает завершающий `\0`, поэтому
+максимальная длина сообщения равна `SIZE - 1`. Перегруженный кадр отбрасывается
+целиком. При срабатывании таймаута накопленная часть сообщения возвращается как
+готовая.
 
 <a id="usage"></a>
 
@@ -62,8 +67,11 @@ void setEOL(char ter);          // установить символ конца
 bool available();               // данные приняты
 uint16_t length();              // количество данных в буфере
 
-char buf;                       // доступ к буферу
+char buf[SIZE];                 // доступ к буферу
 ```
+
+За один вызов `available()` читаются все уже доступные байты до конца первого
+сообщения. Следующее сообщение будет обработано следующим вызовом.
 
 <a id="example"></a>
 
@@ -71,7 +79,7 @@ char buf;                       // доступ к буферу
 Остальные примеры смотри в **examples**!
 ```cpp
 #include <AsyncStream.h>
-AsyncStream<100> serial(&Serial, '\n');
+AsyncStream<100> serial(Serial, '\n');
 
 void setup() {
   Serial.begin(9600);

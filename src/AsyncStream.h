@@ -15,18 +15,16 @@
     v1.1 - исправлен баг
 */
 
-#ifndef _AsyncStream_h
-#define _AsyncStream_h
+#pragma once
 #include <Arduino.h>
 
 template <uint16_t SIZE>
 class AsyncStream {
    public:
-    AsyncStream(Stream* port, char ter = ';', uint16_t tout = 50) {
-        _port = port;
-        _tout = tout;
-        _ter = ter;
-    }
+    static_assert(SIZE > 0, "AsyncStream buffer size must be greater than zero");
+
+    AsyncStream(Stream* port, char ter = ';', uint16_t tout = 50) : _port(port), _ter(ter), _tout(tout) {}
+    AsyncStream(Stream& port, char ter = ';', uint16_t tout = 50) : AsyncStream(&port, ter, tout) {}
 
     // установить таймаут
     void setTimeout(uint16_t tout) {
@@ -40,30 +38,38 @@ class AsyncStream {
 
     // данные приняты
     bool available() {
-        if (_port->available()) {
+        if (!_port) return false;
+
+        while (_port->available()) {
+            int data = _port->read();
+            if (data < 0) break;
+
             if (!_parseF) {
                 _parseF = true;
                 _count = 0;
+                _overflow = false;
                 _tmr = millis();
             }
-            char ch = _port->read();
+
+            char ch = data;
             if (ch == _ter) {
-                buf[_count] = '\0';
-                _parseF = false;
-                return true;
-            } else if (_count < SIZE - 1) buf[_count++] = ch;
+                return _finish();
+            } else if (_count < SIZE - 1) {
+                buf[_count++] = ch;
+            } else {
+                _overflow = true;
+            }
             _tmr = millis();
         }
+
         if (_parseF && millis() - _tmr >= _tout) {
-            _parseF = false;
-            buf[_count] = '\0';
-            return true;
+            return _finish();
         }
         return false;
     }
 
     // количество данных в буфере
-    uint16_t length() {
+    uint16_t length() const {
         return _count;
     }
 
@@ -71,11 +77,16 @@ class AsyncStream {
     char buf[SIZE];
 
    private:
+    bool _finish() {
+        _parseF = false;
+        buf[_count] = '\0';
+        return !_overflow;
+    }
+
     Stream* _port;
     char _ter;
     uint16_t _tout, _count = 0;
     uint32_t _tmr = 0;
     bool _parseF = false;
+    bool _overflow = false;
 };
-
-#endif

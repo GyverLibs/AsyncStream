@@ -49,10 +49,15 @@ Compatible with all Arduino platforms (Arduino features are used)
 // Stream Processor (Serial, SoftwareSerial, etc.)
 // Terminator (symbol of the end of reception) - by default ";" (cut out of the buffer!)
 // timeout in ms - default 50
-AsyncStream<100> serial(&Serial);
-AsyncStream<100> serial(&Serial, '\n');
-AsyncStream<100> serial(&Serial, '\n', 20);
+AsyncStream<100> serial(Serial);
+AsyncStream<100> serial(Serial, '\n');
+AsyncStream<100> serial(Serial, '\n', 20);
 ```
+
+The buffer size must be greater than zero and includes the terminating `\0`, so
+the maximum message length is `SIZE - 1`. An overflowing frame is discarded
+entirely. When the timeout expires, the accumulated partial message is returned
+as complete.
 
 <a id="usage"></a>
 
@@ -63,8 +68,11 @@ void setEOL(char ter);          // signify
 bool available();               // received
 uint16_t length();              // buffer
 
-char buf;                       // buffering
+char buf[SIZE];                 // buffer access
 ```
+
+One `available()` call reads all currently available bytes through the end of
+the first message. A following message is handled by the next call.
 
 <a id="example"></a>
 
@@ -72,7 +80,7 @@ char buf;                       // buffering
 For more examples see **examples**!
 ```cpp
 #include <AsyncStream.h>
-AsyncStream<100> serial(&Serial, '\n');
+AsyncStream<100> serial(Serial, '\n');
 
 void setup() {
   Serial.begin(9600);
